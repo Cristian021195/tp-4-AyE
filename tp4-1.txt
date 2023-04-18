@@ -32,8 +32,8 @@ SEMANTICA: ∀ C, T ∈ CADENA, ∀ x,b ∈ CHAR
 punto 1 b
 
 FUNCION sonIguales(C,T): CADENA X CADENA -> BOOL
-    SI( ESNULA(C) V ESNULA(T) ) ENTONCES
-        RETORNA false
+    SI( ESNULA(C) ^ ESNULA(T) ) ENTONCES
+        RETORNA true
     SI( LARGO(C) = LARGO(T) ) ENTONCES
         SI( LARGO(C) = 1 ) ENTONCES
             SI( ULTIMOCAR(C) = ULTIMOCAR(T) ) ENTONCES
