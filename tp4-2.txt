@@ -1,0 +1,42 @@
+PUNTO 2 a
+
+SINTAXIS
+    GRUPOVACIO -> GRUPO
+    AGREGAR: GRUPO X ELEMENTO -> GRUPO
+    ESVACIO: GRUPO -> BOOL
+    CANTIDAD: GRUPO -> ENTERO >= 0
+    QUITARULTIMO: GRUPO -> GRUPO
+    ULTIMOELEMENTO: GRUPO -> ELEMENTO U {indefinido}
+    INCLUIDO: GRUPO X ELEMENTO -> BOOL
+    CONTARCOMUNES: GRUPO X GRUPO -> ENTERO >= 0
+
+SEMANTICA: ∀ C, T ∈ GRUPO, ∀ x,b ∈ ENTERO
+    ESVACIO(NULA) = true
+    ESVACIO(AGREGAR(C, x)) = false
+    CANTIDAD(NULA) = 0
+    CANTIDAD(AGREGAR(C, x)) = 1 + CANTIDAD(C)
+    QUITARULTIMO(NULA) = NULA
+    QUITARULTIMO(AGREGAR(C, x)) = C
+    ULTIMOELEMENTO(NULA) = indefinido
+    ULTIMOELEMENTO(AGREGAR(C, x)) = x
+    INCLUIDO(NULA,x) = false
+    INCLUIDO(AGREGAR(C,x),b) = SI x = b ENTONCES true SINO INCLUIDO(C,b)
+    CONTARCOMUNES(NULA,NULA) = 0
+    CONTARCOMUNES(AGREGAR(C, x),NULA) = 0
+    CONTARCOMUNES(NULA,AGREGAR(T,b)) = 0
+    CONTARCOMUNES(AGREGAR(C,x),AGREGAR(T,b)) = ...
+        SI x = b ENTONCES 
+            1 + CONTARCOMUNES(C, T)
+        SINO 
+            CONTARCOMUNES(C, T)
+        
+------------------------------------------------------------------------------            
+PUNTO 2 c 
+
+FUNCION union(C,T): GRUPO X GRUPO -> GRUPO
+    SI ESVACIO(T)        
+        RETORNA C
+    SINO
+        RETORNA AGREGAR( union( C, QUITARULTIMO(T) ), ULTIMOELEMENTO(T) ) 
+
+FIN FUNCION union

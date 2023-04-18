@@ -1,0 +1,49 @@
+punto 1 a
+
+SINTAXIS
+    NULA -> CADENA
+    ESNULA: CADENA -> BOOL
+    LARGO: CADENA -> ENTERO >= 0
+    AGGAR: CADENA X CHAR -> CADENA
+    CONCAT: CADENA X CADENA -> CADENA
+    PRIMERCAR: CADENA -> CHAR U { indefinido }
+    ULTIMOCAR: CADENA -> CHAR U { indefinido }
+    BORRARULT: CADENA -> CADENA
+    EXISTE: CADENA X CHAR -> BOOL
+    REEMPLAZAR: CADENA X CHAR X CHAR -> CADENA
+
+SEMANTICA: ∀ C, T ∈ CADENA, ∀ x,b ∈ CHAR
+    ESNULA(NULA) = true
+    ESNULA(AGGAR(C,x)) = false
+    LARGO(NULA) = 0
+    LARGO(AGGAR(C,x)) = 1 + LARGO(C)
+    CONCAT(C, NULA) = C
+    CONCAT(C, AGGAR(T,x)) = AGGAR(CONCAT(C,T),x)
+    PRIMERCAR(NULA) = indefinido
+    PRIMERCAR(AGGAR(C,x)) = SI ESNULA(C) ENTONCES x SINO PRIMERCAR(C)
+    ULTIMOCAR(NULA) = indefinido
+    ULTIMOCAR(AGGAR(C,x)) = x
+    BORRARULT(NULA) = NULA
+    BORRARULT(AGGAR(C,x)) = x
+    EXISTE(NULA,x) = false
+    EXISTE(AGGAR(C,x),b) = SI (x = b) ENTONCES true SINO EXISTE(C,b)
+
+
+punto 1 b
+
+FUNCION sonIguales(C,T): CADENA X CADENA -> BOOL
+    SI( ESNULA(C) V ESNULA(T) ) ENTONCES
+        RETORNA false
+    SI( LARGO(C) = LARGO(T) ) ENTONCES
+        SI( LARGO(C) = 1 ) ENTONCES
+            SI( ULTIMOCAR(C) = ULTIMOCAR(T) ) ENTONCES
+                RETORNA true
+            SINO
+                RETORNA false
+        SINO
+            SI( ULTIMOCAR(C) = ULTIMOCAR(T) ) ENTONCES
+                sonIguales( BORRARULT(C), BORRARULT(T) )
+            SINO
+                RETORNA false
+    SINO
+        RETORNA false;    
