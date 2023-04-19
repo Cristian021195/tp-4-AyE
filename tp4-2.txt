@@ -1,4 +1,4 @@
-PUNTO 2 a
+PUNTO 2 a)
 
 SINTAXIS
     GRUPOVACIO -> GRUPO
@@ -31,7 +31,7 @@ SEMANTICA: ∀ C, T ∈ GRUPO, ∀ x,b ∈ ENTERO
             CONTARCOMUNES(C, T)
         
 ------------------------------------------------------------------------------            
-PUNTO 2 c 
+PUNTO 2 c)
 
 FUNCION union(C,T): GRUPO X GRUPO -> GRUPO
     SI ESVACIO(T)        
