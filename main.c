@@ -24,6 +24,7 @@ int INCLUIDO(GRUPO G, item x);
 int CONTARCOMUNES(GRUPO G, GRUPO J);
 
 GRUPO UNION(GRUPO G, GRUPO J);
+//GRUPO UNION(GRUPO *G, GRUPO *J);
 
 int main(){
     GRUPO G = GRUPOVACIO();     GRUPO J = GRUPOVACIO();    GRUPO V = GRUPOVACIO();
@@ -42,7 +43,7 @@ int main(){
     if (!ESVACIO(J)){   printf("El grupo J No es vacio\n");    }
     
     //G = UNION(&G, J);
-    //MOSTRAR(UNION(G,J));
+    MOSTRAR(UNION(G,J));
     //printf("---\n");
     //MOSTRAR(G);
     //printf("---\n");
