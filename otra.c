@@ -21,7 +21,7 @@ GRUPO QUITARULTIMO(GRUPO G);
 item ULTIMOELEMENTO(GRUPO G);
 int CANTIDAD(GRUPO G);
 int INCLUIDO(GRUPO G, item x);
-int CONTARCOMUNES(GRUPO G, GRUPO *J);
+int CONTARCOMUNES(GRUPO G, GRUPO J);
 
 GRUPO UNION(GRUPO G, GRUPO *J); // como usuario ADT
 //GRUPO UNION(GRUPO *G, GRUPO *J);
@@ -30,30 +30,17 @@ int main(){
     GRUPO G = GRUPOVACIO();     GRUPO J = GRUPOVACIO();    GRUPO V = GRUPOVACIO();
     printf("Grupo G\n");
     G = AGREGAR(G, 3);  G = AGREGAR(G, 2);
-    G = AGREGAR(G, 1); G = AGREGAR(G, 0);
-    MOSTRAR(G); 
+    //G = AGREGAR(G, 1); G = AGREGAR(G, 0);
+    //MOSTRAR(G); 
 
     printf("Grupo J\n");
     J = AGREGAR(J,9);   J = AGREGAR(J, 7);
-    J = AGREGAR(J, 4); J = AGREGAR(J, 3); 
-    //BORRARULTIMO(&J);
-    MOSTRAR(J);
-
-    if (ESVACIO(V) == 1){   printf("El grupo V es vacio\n");    }
-    if (!ESVACIO(J)){   printf("El grupo J No es vacio\n");    }
+    //J = AGREGAR(J, 4); J = AGREGAR(J, 3); 
+    //MOSTRAR(J); printf("Grupo J\n");
     
-    printf("union G\n");
-
-    //G = UNION(&G, J);
-    MOSTRAR(UNION(G,&J));
-    if (!ESVACIO(J)){   printf("El grupo J No es vacio\n");    }
-
-	//MOSTRAR(J);
-    //printf("---\n");
-    //MOSTRAR(G);
-    //printf("---\n");
-    //MOSTRAR(J);
-    //printf("\nCOMUNES: %d\n", CONTARCOMUNES(G,J));
+    printf("COMUNES: %d",CONTARCOMUNES(G,J));
+    
+    
 
     
     
@@ -117,21 +104,28 @@ int INCLUIDO(GRUPO G, item x){
     return 0;
 }
 
-int CONTARCOMUNES(GRUPO G, GRUPO *J){ // PORQUE SI ES ADT NO TENEMOS QUE BORRAR, COMO PARTE DEL ADT ACCEDE A PUNTERO Y DEMAS (A DIFERENCIA DE UNION)
-    //
-    if (ESVACIO(G) == 1 || ESVACIO(*J) == 1){
-        return 0;
-    } else {
-        if (INCLUIDO(G, ULTIMOELEMENTO(*J)))
-        {
-            *J = QUITARULTIMO(*J);
-            return 1 + CONTARCOMUNES(G,J);
-        } else
-        {
-            *J = QUITARULTIMO(*J);
-            return CONTARCOMUNES(G,J);
-        }   
-    }    
+int CONTARCOMUNES(GRUPO G, GRUPO J){
+	int contador = 0;
+	
+    if(G == NULL || J == NULL){
+    	return 0;
+	}
+	
+	if(G != NULL && J != NULL){
+		while (G!=NULL){
+        	if(J->dato==G->dato){
+	            contador++;
+	            
+        	}
+        	G=G->siguiente;
+    	}
+    	return 0;
+	}
+    //if (G == NULL || J == NULL){
+      //  return 0;
+    //} else {
+        //return 3;
+    //}
 }
 
 GRUPO UNION(GRUPO G, GRUPO *J){

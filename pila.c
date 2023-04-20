@@ -24,7 +24,6 @@ int main(){
 
     printf("\nES VACIA?: %d", ESPILAVACIA(A));
 
-
     PUSH(&A, 3); PUSH(&A, 6); PUSH(&A, 9);
 
     MOSTRAR(A);

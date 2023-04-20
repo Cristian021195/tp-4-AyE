@@ -46,4 +46,4 @@ FUNCION sonIguales(C,T): CADENA X CADENA -> BOOL
             SINO
                 RETORNA false
     SINO
-        RETORNA false;    
+        RETORNA false;
