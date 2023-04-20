@@ -17,28 +17,27 @@ int ESVACIO(GRUPO G);
 GRUPO AGREGAR(GRUPO G, item x);
 void MOSTRAR(GRUPO G);
 GRUPO QUITARULTIMO(GRUPO G);
-//void BORRARULTIMO(GRUPO* G);
+void BORRARULTIMO(GRUPO* G);
 item ULTIMOELEMENTO(GRUPO G);
 int CANTIDAD(GRUPO G);
 int INCLUIDO(GRUPO G, item x);
-int CONTARCOMUNES(GRUPO G, GRUPO J);
+int CONTARCOMUNES(GRUPO G, GRUPO *J);
 
 GRUPO UNION(GRUPO G, GRUPO *J); // como usuario ADT
-//GRUPO UNION(GRUPO *G, GRUPO *J);
 
 int main(){
     GRUPO G = GRUPOVACIO();     GRUPO J = GRUPOVACIO();    GRUPO V = GRUPOVACIO();
     printf("Grupo G\n");
     G = AGREGAR(G, 3);  G = AGREGAR(G, 2);
-    //G = AGREGAR(G, 1); G = AGREGAR(G, 0);
+    G = AGREGAR(G, 1); G = AGREGAR(G, 0);
     //MOSTRAR(G); 
 
     printf("Grupo J\n");
     J = AGREGAR(J,9);   J = AGREGAR(J, 7);
-    //J = AGREGAR(J, 4); J = AGREGAR(J, 3); 
+    J = AGREGAR(J, 4); J = AGREGAR(J, 3); J = AGREGAR(J, 0); 
     //MOSTRAR(J); printf("Grupo J\n");
     
-    printf("COMUNES: %d",CONTARCOMUNES(G,J));
+    printf("COMUNES: %d",CONTARCOMUNES(G,&J));
     
     
 
@@ -104,28 +103,22 @@ int INCLUIDO(GRUPO G, item x){
     return 0;
 }
 
-int CONTARCOMUNES(GRUPO G, GRUPO J){
+int CONTARCOMUNES(GRUPO G, GRUPO *J){
 	int contador = 0;
+    ELEMENTO *AUX = *J;
 	
-    if(G == NULL || J == NULL){
+    if(G == NULL || *J == NULL){
     	return 0;
 	}
-	
-	if(G != NULL && J != NULL){
-		while (G!=NULL){
-        	if(J->dato==G->dato){
-	            contador++;
-	            
-        	}
-        	G=G->siguiente;
+	while (G!=NULL && *J!=NULL){
+    	if( G->dato == (*J)->dato){
+	        contador++;
+            *J = (*J)->siguiente;
+            free(AUX); AUX = NULL;
     	}
-    	return 0;
-	}
-    //if (G == NULL || J == NULL){
-      //  return 0;
-    //} else {
-        //return 3;
-    //}
+    	G=G->siguiente;
+    }
+    return contador;
 }
 
 GRUPO UNION(GRUPO G, GRUPO *J){
@@ -138,7 +131,7 @@ GRUPO UNION(GRUPO G, GRUPO *J){
     }
 }
 
-/*
+
 void BORRARULTIMO(GRUPO* G){
     if ((*G)!=NULL)
     {
@@ -159,4 +152,4 @@ void BORRARULTIMO(GRUPO* G){
             
         }
     }
-}*/
+}

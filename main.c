@@ -17,14 +17,11 @@ int ESVACIO(GRUPO G);
 GRUPO AGREGAR(GRUPO G, item x);
 void MOSTRAR(GRUPO G);
 GRUPO QUITARULTIMO(GRUPO G);
-//void BORRARULTIMO(GRUPO* G);
 item ULTIMOELEMENTO(GRUPO G);
 int CANTIDAD(GRUPO G);
 int INCLUIDO(GRUPO G, item x);
 int CONTARCOMUNES(GRUPO G, GRUPO *J);
-
 GRUPO UNION(GRUPO G, GRUPO *J); // como usuario ADT
-//GRUPO UNION(GRUPO *G, GRUPO *J);
 
 int main(){
     GRUPO G = GRUPOVACIO();     GRUPO J = GRUPOVACIO();    GRUPO V = GRUPOVACIO();
@@ -42,10 +39,10 @@ int main(){
     if (ESVACIO(V) == 1){   printf("El grupo V es vacio\n");    }
     if (!ESVACIO(J)){   printf("El grupo J No es vacio\n");    }
     
-    printf("union G\n");
+    //printf("union G\n");
 
     //G = UNION(&G, J);
-    MOSTRAR(UNION(G,&J));
+    //MOSTRAR(UNION(G,&J));
     if (!ESVACIO(J)){   printf("El grupo J No es vacio\n");    }
 
 	//MOSTRAR(J);
@@ -53,7 +50,7 @@ int main(){
     //MOSTRAR(G);
     //printf("---\n");
     //MOSTRAR(J);
-    //printf("\nCOMUNES: %d\n", CONTARCOMUNES(G,J));
+    printf("\nCOMUNES: %d\n", CONTARCOMUNES(G,&J));
 
     
     
@@ -87,7 +84,6 @@ GRUPO QUITARULTIMO(GRUPO G){
     {
         ELEMENTO* aux;
         aux = G;
-        /* printf("%d", aux->dato); // muestra el primero, el que debo QUITARULTIMO */
         G = aux->siguiente;
         free(aux);
         return G;
@@ -117,24 +113,22 @@ int INCLUIDO(GRUPO G, item x){
     return 0;
 }
 
-int CONTARCOMUNES(GRUPO G, GRUPO *J){ // PORQUE SI ES ADT NO TENEMOS QUE BORRAR, COMO PARTE DEL ADT ACCEDE A PUNTERO Y DEMAS (A DIFERENCIA DE UNION)
-    //
-    if (ESVACIO(G) == 1 || ESVACIO(*J) == 1){
-        return 0;
-    } else {
-        if (INCLUIDO(G, ULTIMOELEMENTO(*J)))
-        {
-            *J = QUITARULTIMO(*J);
-            return 1 + CONTARCOMUNES(G,J);
-        } else
-        {
-            *J = QUITARULTIMO(*J);
-            return CONTARCOMUNES(G,J);
-        }   
-    }    
+int CONTARCOMUNES(GRUPO G, GRUPO *J){ // COMO PARTE DEL ADT ACCEDE A PUNTERO Y DEMAS (A DIFERENCIA DE UNION)
+    int contador = 0;
+    ELEMENTO *AUX = *J;
+
+	while (G!=NULL && *J!=NULL){
+    	if( G->dato == (*J)->dato){
+	        contador++;
+            *J = (*J)->siguiente;
+            free(AUX);
+    	}
+    	G=G->siguiente;
+    }
+    return contador;
 }
 
-GRUPO UNION(GRUPO G, GRUPO *J){
+GRUPO UNION(GRUPO G, GRUPO *J){ // COMO USUARIO, IMPLEMENTAMOS LAS FUNCIONES YA ANTERIORMENTE DEFINIDAS EN LA ESPECIFICACION
     if(ESVACIO(*J)){
         return G;    
     }else{
@@ -143,26 +137,3 @@ GRUPO UNION(GRUPO G, GRUPO *J){
         return AGREGAR(UNION(G, J), dato);
     }
 }
-
-/*
-void BORRARULTIMO(GRUPO* G){
-    if ((*G)!=NULL)
-    {
-        if ((*G)->siguiente==NULL)
-        {
-            (*G)=QUITARULTIMO(*G);
-        } else
-        {
-            ELEMENTO *temp;
-            temp = (*G);
-            while ((*G)->siguiente->siguiente != NULL)  //[5,()4,3,2,1
-            {
-                *G =(*G)->siguiente;
-            }
-            free((*G)->siguiente);
-            (*G)->siguiente = NULL;
-            (*G)=temp;
-            
-        }
-    }
-}*/
