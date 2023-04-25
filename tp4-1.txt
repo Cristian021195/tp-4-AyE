@@ -24,7 +24,7 @@ SEMANTICA: ∀ C, T ∈ CADENA, ∀ x,b ∈ CHAR
     ULTIMOCAR(NULA) = indefinido
     ULTIMOCAR(AGGAR(C,x)) = x
     BORRARULT(NULA) = NULA
-    BORRARULT(AGGAR(C,x)) = x
+    BORRARULT(AGGAR(C,x)) = C
     EXISTE(NULA,x) = false
     EXISTE(AGGAR(C,x),b) = SI (x = b) ENTONCES true SINO EXISTE(C,b)
 

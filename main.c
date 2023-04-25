@@ -20,7 +20,7 @@ GRUPO QUITARULTIMO(GRUPO G);
 item ULTIMOELEMENTO(GRUPO G);
 int CANTIDAD(GRUPO G);
 int INCLUIDO(GRUPO G, item x);
-int CONTARCOMUNES(GRUPO G, GRUPO *J);
+int CONTARCOMUNES(GRUPO G, GRUPO J);
 GRUPO UNION(GRUPO G, GRUPO *J); // como usuario ADT
 
 int main(){
@@ -43,14 +43,16 @@ int main(){
 
     //G = UNION(&G, J);
     //MOSTRAR(UNION(G,&J));
-    if (!ESVACIO(J)){   printf("El grupo J No es vacio\n");    }
+    //if (!ESVACIO(J)){   printf("El grupo J No es vacio\n");    }
 
 	//MOSTRAR(J);
     //printf("---\n");
     //MOSTRAR(G);
     //printf("---\n");
     //MOSTRAR(J);
-    printf("\nCOMUNES: %d\n", CONTARCOMUNES(G,&J));
+    printf("\nCOMUNES: %d\n", CONTARCOMUNES(G,J));
+
+    //MOSTRAR(J);
 
     
     
@@ -106,18 +108,42 @@ int INCLUIDO(GRUPO G, item x){
     while (G!=NULL)
     {
         if(x==G->dato){
-            return 1;
+            return 0;
         }
         G=G->siguiente;
     }
-    return 0;
+    return 1;
 }
 
-int CONTARCOMUNES(GRUPO G, GRUPO *J){ // COMO PARTE DEL ADT ACCEDE A PUNTERO Y DEMAS (A DIFERENCIA DE UNION)
-    int contador = 0;
-    ELEMENTO *AUX = *J;
+int CONTARCOMUNES(GRUPO G, GRUPO J){ // COMO PARTE DEL ADT ACCEDE A PUNTERO Y DEMAS (A DIFERENCIA DE UNION)
+    /*
+    Grupo G:    0 | 1 | 2 | 3
+    Grupo J:    3 | 4 | 7 | 9
+    */
+    if(J->siguiente != NULL){
+        if (INCLUIDO(G, J->dato) != 1)
+        {   
+            J = J->siguiente;
+            return 1 + CONTARCOMUNES(G, J);
+        }else{
+            J = J->siguiente;
+            return CONTARCOMUNES(G, J);
+        }
+    }
+    
+    //INCLUIDO(G, J->dato);
+    //return INCLUIDO(G, J->siguiente->dato);
+    
+    
 
-	while (G!=NULL && *J!=NULL){
+    /*SI INCLUIDO(AGREGAR(C,x), b) ENTONCES 
+            1 + CONTARCOMUNES(AGREGAR(C,x), T)
+        SINO 
+            CONTARCOMUNES(AGREGAR(C,x), T)*/
+
+
+
+	/*while (G!=NULL && *J!=NULL){
     	if( G->dato == (*J)->dato){
 	        contador++;
             *J = (*J)->siguiente;
@@ -125,7 +151,7 @@ int CONTARCOMUNES(GRUPO G, GRUPO *J){ // COMO PARTE DEL ADT ACCEDE A PUNTERO Y D
     	}
     	G=G->siguiente;
     }
-    return contador;
+    return contador;*/
 }
 
 GRUPO UNION(GRUPO G, GRUPO *J){ // COMO USUARIO, IMPLEMENTAMOS LAS FUNCIONES YA ANTERIORMENTE DEFINIDAS EN LA ESPECIFICACION
