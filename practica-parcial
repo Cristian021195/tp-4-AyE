@@ -12,7 +12,6 @@ SINTAXIS:
     EXISTE: CADENA x CHAR -> BOOL
     REEMPLAZA: CADENA x CHAR x CHAR -> CADENA
 
-
 SEMANTICA: para toda C1, C2 de CADENA,  para todo a,b,c de CHAR
     ESNULA(NULA) = TRUE
     ESNULA(AGREGAR(C1, a)) = FALSE
