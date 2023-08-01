@@ -1,0 +1,53 @@
+TIPO: CADENA
+OPERACIONES
+
+SINTAXIS:    
+    NULA: -> CADENA
+    AGREGAR: CADENA x CHAR -> CADENA
+    ESNULA: CADENA -> BOOL
+    LARGO: CADENA -> entero >= 0
+    CONCAT: CADENA x CADENA -> CADENA
+    ULTIMO: CADENA -> char U {indef}
+    QUITAR: CADENA -> CADENA
+    EXISTE: CADENA x CHAR -> BOOL
+    REEMPLAZA: CADENA x CHAR x CHAR -> CADENA
+
+
+SEMANTICA: para toda C1, C2 de CADENA,  para todo a,b,c de CHAR
+    ESNULA(NULA) = TRUE
+    ESNULA(AGREGAR(C1, a)) = FALSE
+    LARGO(NULA) = 0
+    LARGO(AGREGAR(C1, a)) = 1 + LARGO(C1)
+    CONCAT(C1,NULA) = C1
+    CONCAT(C1,AGREGAR(C2,a)) = AGREGAR(CONCAT(C1,C2),a)
+    ULTIMO(NULA) = indef
+    ULTIMO(AGREGAR(C1,a)) = a
+    QUITAR(NULA) = NULA
+    QUITAR(AGREGAR(C1,a)) = C1
+    EXISTE(NULA, a) = FALSE
+    EXISTE(AGREGAR(C1, a), b) = a == b OR EXISTE(C1,b)
+    REEMPLAZA(NULA, a,b) = NULA
+    REEMPLAZA(AGREGAR(C1, c),a, b) = ...
+        SI(c == a) ENT
+            AGREGAR(QUITAR(AGREGAR(C1,c)), b)
+        SINO
+            AGREGAR(QUITAR(AGREGAR(C1,c)), c)
+
+
+FUNCION SON_IGUALES(C1, C2)-> BOOL
+
+    SI (LARGO(C1) == LARGO(C2)) ENT
+        SI(ULTIMO(C1) == ULTIMO(C2)) ENT
+            SI(LARGO(C1) <= 1) ENT
+                RETORNA TRUE
+            SINO
+                SON_IGUALES(QUITAR(C1), QUITAR(C2))
+        SINO
+            RETORNA FALSE
+    SINO
+        RETORNA FALSE
+
+FIN
+
+
+
